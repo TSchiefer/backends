@@ -1,0 +1,30 @@
+openapi: 3.0.2
+info:
+  description: Lists all known DBI backends
+  title: DBI backends li bal bakjsdlafk lj
+  version: 0.0.1
+paths:
+  /all:
+    get:
+      summary: ' All backends'
+      responses:
+        '200':
+          description: OK
+        default:
+          description: Default response.
+      parameters: []
+  /by-package:
+    get:
+      summary: ' All backends'
+      responses:
+        '200':
+          description: OK
+        default:
+          description: Default response.
+      parameters:
+      - name: name
+        description: Package name
+        in: query
+        required: no
+        schema:
+          type: string
