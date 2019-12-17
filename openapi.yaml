@@ -19,8 +19,10 @@ paths:
       responses:
         '200':
           description: OK
+        '400':
+          description: Package name missing (required).
         '500':
-          description: Error (Package name correct?)
+          description: Package name not found.
         default:
           description: Default response.
       parameters:

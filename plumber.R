@@ -20,13 +20,23 @@ all <- function(res) {
 #' @response 200 OK
 #' @get /by-package
 by_package <- function(res, name) {
-  path <- file.path("docs/by-package", paste0(name, ".json"))
   tryCatch(
-    paste(readLines(path), collapse = "\n"),
+    path <- file.path("docs/by-package", paste0(name, ".json")),
     error = function(e) {
-      res$status <- 500
-      # res$status = 400  # the response object that is always available in plumber functions
-      jsonlite::toJSON(list(error = conditionMessage(e))) #, traceback = ...))
+      res$status <- 400
+    })
+  if (res$status != 400) {
+    tryCatch(
+      paste(readLines(path), collapse = "\n"),
+      error = function(e) {
+        res$status <- 500
+        jsonlite::toJSON(
+          list(
+            error = paste0("Please verify package name: ", name)))
       })
+    } else jsonlite::toJSON(list(
+        error =
+          "Your request did not include the package name (required).")
+      )
 }
 
