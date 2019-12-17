@@ -1,8 +1,8 @@
-openapi: 3.0.2
+swagger: "2.0"
 info:
-  description: Lists all known DBI backends
-  title: DBI backends li bal bakjsdlafk lj
-  version: 0.0.1
+  description: "Lists all known DBI backends"
+  version: "0.0.1"
+  title: "DBI backends"
 paths:
   /all:
     get:
