@@ -15,10 +15,12 @@ paths:
       parameters: []
   /by-package:
     get:
-      summary: ' All backends'
+      summary: ' Request backend by R package name'
       responses:
         '200':
           description: OK
+        '500':
+          description: Error (Package name correct?)
         default:
           description: Default response.
       parameters:
