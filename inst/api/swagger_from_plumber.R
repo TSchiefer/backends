@@ -24,4 +24,3 @@ plumber$run(swagger = function(pr, spec, ...) {
   spec <- yaml::read_yaml("openapi.yaml")
   spec
 })
-
