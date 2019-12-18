@@ -24,17 +24,27 @@ by_package <- function(res, name) {
     res$status <- 400
     jsonlite::toJSON(list(
       error =
-        "Your request did not include the package name (required).")
-    )} else {
-      path <- file.path("docs/by-package", paste0(name, ".json"))
-      tryCatch(
-        paste(readLines(path), collapse = "\n"),
-        error = function(e) {
-          res$status <- 500
-          jsonlite::toJSON(
-            list(
-              error = paste0("Please verify package name: ", name)))
-        })
+        "Your request did not include the package name (required)."
+    ))
+  } else {
+    path <- file.path("docs/by-package", paste0(name, ".json"))
+    file_exists <- file.exists(path)
+    if (!base::all(file_exists)) {
+      res$status <- 500
+      jsonlite::toJSON(list(
+        error =
+          paste0(
+            "Please verify package name: ",
+            paste0(name[!file_exists], collapse = ", ")
+          )
+      ))
+    } else {
+      jsonlite::toJSON(setNames(purrr::map(name, by_package_impl), name), pretty = TRUE, auto_unbox = TRUE)
     }
+  }
 }
 
+by_package_impl <- function(name) {
+  path <- file.path("docs/by-package", paste0(name, ".json"))
+  jsonlite::read_json(path)
+}

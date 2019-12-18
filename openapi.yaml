@@ -16,6 +16,8 @@ paths:
   /by-package:
     get:
       summary: ' Request backend by R package name'
+      produces:
+      - "application/json"
       responses:
         '200':
           description: OK
@@ -23,16 +25,17 @@ paths:
           description: Package name missing (required).
         '500':
           description: Package name not found.
-        default:
-          description: Default response.
+      default:
+        description: Default response.
+      security:
+      - api_key: []
       parameters:
       - name: name
         description: Package name
         in: query
-        required: no
-        schema:
-          $ref: "#/definitions/name"
-definitions:
-  name:
-    type: "string"
-    example: "RPostgres"
+        required: yes
+        type: "array"
+        items:
+          type: "string"
+          default: "RPostgres"
+        collectionFormat: "multi"
