@@ -37,5 +37,8 @@ paths:
         type: "array"
         items:
           type: "string"
+          enum:
+          - "RPostgres"
+          - "RSQLite"
           default: "RPostgres"
         collectionFormat: "multi"
