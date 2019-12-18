@@ -31,4 +31,8 @@ paths:
         in: query
         required: no
         schema:
-          type: string
+          $ref: "#/definitions/name"
+definitions:
+  name:
+    type: "string"
+    example: "RPostgres"
