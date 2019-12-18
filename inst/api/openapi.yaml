@@ -70,3 +70,21 @@ paths:
           - "TSpadi"
           default: "RPostgres"
         collectionFormat: "multi"
+  /give-feedback:
+    post:
+      summary: ' Post something'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: empty post
+        '500':
+          description: only string content allowed
+        default:
+          description: Default response.
+      parameters:
+      - name: content
+        description: Content of the post
+        in: query
+        required: yes
+        type: "string"

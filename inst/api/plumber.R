@@ -48,3 +48,31 @@ by_package_impl <- function(name) {
   path <- file.path("docs/by-package", paste0(name, ".json"))
   jsonlite::read_json(path)
 }
+
+#' Post something
+#'
+#' @param content Content of the post
+#' @response 200 OK
+#' @post /give-feedback
+give_feedback <- function(res, content) {
+  if (rlang::is_missing(content)) {
+    res$status <- 400
+    list(
+      error =
+        "Your POST did not include the content (required)."
+    )
+  } else {
+    if (!is.character(content)) {
+      res$status <- 500
+      list(
+        error =
+          paste0(
+            "The content you posted is not of class character but of class: ",
+            paste0(class(content, collapse = ", "))
+          )
+      )
+    } else {
+      list(POST = content)
+    }
+  }
+}
