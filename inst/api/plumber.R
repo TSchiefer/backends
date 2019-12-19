@@ -30,7 +30,7 @@ by_package <- function(res, name) {
     path <- file.path("docs/by-package", paste0(name, ".json"))
     file_exists <- file.exists(path)
     if (!base::all(file_exists)) {
-      res$status <- 500
+      res$status <- 404
       jsonlite::toJSON(list(
         error =
           paste0(
@@ -63,7 +63,7 @@ give_feedback <- function(res, content) {
     )
   } else {
     if (!is.character(content)) {
-      res$status <- 500
+      res$status <- 400
       list(
         error =
           paste0(

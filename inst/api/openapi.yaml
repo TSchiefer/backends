@@ -27,7 +27,7 @@ paths:
               $ref: "#/definitions/backend"
         '400':
           description: Package name missing (required).
-        '500':
+        '404':
           description: Package name not found.
       default:
         description: Default response.
@@ -81,9 +81,7 @@ paths:
         '200':
           description: OK
         '400':
-          description: empty post
-        '500':
-          description: only string content allowed
+          description: empty post or bad content type
         default:
           description: Default response.
       parameters:
