@@ -23,4 +23,4 @@ plumber <- plumber::plumb("inst/api/plumber.R")
 plumber$run(swagger = function(pr, spec, ...) {
   spec <- yaml::read_yaml("inst/api/openapi.yaml")
   spec
-})
+}, port = 8421)
