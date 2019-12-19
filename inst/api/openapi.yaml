@@ -21,6 +21,10 @@ paths:
       responses:
         '200':
           description: OK
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/backend"
         '400':
           description: Package name missing (required).
         '500':
@@ -88,3 +92,34 @@ paths:
         in: query
         required: yes
         type: "string"
+definitions:
+  backend:
+    description: "Name of package"
+    type: "object"
+    properties:
+      version:
+        type: "string"
+        example: "1.0.3"
+      title:
+        type: "string"
+        example: "'Rcpp' Interface to 'PostgreSQL'"
+      description:
+        type: "string"
+        example: "Fully 'DBI'-compliant 'Rcpp'-backed interface to 'PostgreSQL' <https://www.postgresql.org/>, an open-source relational database."
+      date:
+        type: "string"
+        example: "2019-12-07"
+      maintainer:
+        type: "string"
+        example: "Kirill Müller <krlmlr+r@mailbox.org>"
+      license:
+        type: "string"
+        example: "GPL-2"
+      url:
+        type: "string"
+        example: "https://github.com/r-dbi/RPostgres"
+      bugs:
+        type: "string"
+        example: "https://github.com/r-dbi/RPostgres/issues"
+    json:
+      name: "backend"
