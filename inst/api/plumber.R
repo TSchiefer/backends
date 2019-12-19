@@ -76,3 +76,12 @@ give_feedback <- function(res, content) {
     }
   }
 }
+
+# curl --data-binary "@docs/test.json" -X POST "http://127.0.0.1:8421/file-upload" -H "accept: application/json"
+#' Post a file
+#'
+#' @post /file-upload
+function(req) {
+  req$postBody
+  jsonlite::parse_json(req$postBody, simplifyVector = TRUE)
+}

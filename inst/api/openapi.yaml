@@ -90,6 +90,24 @@ paths:
         in: query
         required: yes
         type: "string"
+  /file-upload:
+    post:
+      summary: ' Upload a file'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: empty post or bad content type
+        default:
+          description: Default response.
+      parameters:
+      - in: body
+        name: file_body
+        description: The content of the uploaded file
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/backend"
 definitions:
   backend:
     description: "Name of package"
