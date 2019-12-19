@@ -8,8 +8,8 @@ plumber$run(swagger = TRUE)
 # `plumber$run(port = 8961, swagger = TRUE)`
 
 # converting json to yaml:
-jsonlite::read_json("inst/api/openapi.json") %>%
-  yaml::write_yaml("inst/api/openapi.yaml")
+# jsonlite::read_json("inst/api/openapi.json") %>%
+#   yaml::write_yaml("inst/api/openapi.yaml")
 
 # by default the produced swagger/openapi-file is (currently) one
 # of version 3.0.2 if an earlier version is required, a manual
