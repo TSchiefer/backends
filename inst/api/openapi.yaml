@@ -121,5 +121,3 @@ definitions:
       bugs:
         type: "string"
         example: "https://github.com/r-dbi/RPostgres/issues"
-    json:
-      name: "backend"
