@@ -1,7 +1,7 @@
-library(magrittr)
-
-plumber <- plumber::plumb("inst/api/plumber.R")
-plumber$run(swagger = TRUE)
+# library(magrittr)
+#
+# plumber <- plumber::plumb("inst/api/plumber.R")
+# plumber$run(swagger = TRUE)
 
 # openapi.json comes from saving the swagger-file that is accessible
 # at http://127.0.0.1:8961/openapi.json when running
