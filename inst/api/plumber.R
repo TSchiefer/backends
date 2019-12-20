@@ -82,6 +82,14 @@ give_feedback <- function(res, content) {
 #'
 #' @post /file-upload
 function(req) {
-  req$postBody
-  jsonlite::parse_json(req$postBody, simplifyVector = TRUE)
+  # req$postBody contains the body of the posted file converted to "character".
+  # It is as of yet unclear where exactly this conversion happens.
+  # like it is implemented now we can convert req$postBody to "raw", but e.g. in case
+  # of an uploaded pdf file, during the conversion of pdf->"character" already
+  # some information gets lost, so it's not as easy as writing/saving it as a pdf file,
+  # cause it then will be corrupted.
+  # The question if the behavior will be the same for spectra-files would need
+  # to be investigated.
+  raw <- charToRaw(req$postBody)
+  writeBin(raw, "test_new")
 }
