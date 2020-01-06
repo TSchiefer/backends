@@ -106,12 +106,22 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/backend"
+              $ref: "#/definitions/file_info"
         '400':
           description: empty post or bad content type
         default:
           description: Default response.
 definitions:
+  file_info:
+    description: "Meta-info about uploaded file"
+    type: "object"
+    properties:
+      length:
+        type: "integer"
+        example: "100"
+      md5:
+        type: "character"
+        example: "6717f2823d3202449301145073ab8719"
   backend:
     description: "Name of package"
     type: "object"
