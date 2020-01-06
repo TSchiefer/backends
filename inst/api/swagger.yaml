@@ -94,10 +94,10 @@ paths:
     post:
       summary: ' Upload a file'
       consumes:
-             - multipart/form-data
+        - multipart/form-data
       parameters:
         - in: formData
-          name: file_to_upload
+          name: upload
           type: file
           description: The file to upload.
       responses:
