@@ -86,15 +86,14 @@ give_feedback <- function(res, content) {
 #' @post /file-upload
 function(req) {
   multipart <- mime::parse_multipart(req)
-
-  # This is for testing, only works on a local server
-  in_contents <- readBin(multipart$upload$name, raw(1), n = 100e6)
-  out_contents <- readBin(multipart$upload$datapath, raw(1), n = 100e6)
+  # This is for testing, only works on a local server and if the test file is located in main project folder
+  in_contents <- readBin(multipart$file_to_upload$name, raw(1), n = 100e6)
+  out_contents <- readBin(multipart$file_to_upload$datapath, raw(1), n = 100e6)
 
   stopifnot(identical(in_contents, out_contents))
 
   list(
     length = jsonlite::unbox(length(out_contents)),
-    md5 = digest::digest(multipart$upload$datapath, file = TRUE)
+    md5 = digest::digest(multipart$file_to_upload$datapath, file = TRUE)
   )
 }

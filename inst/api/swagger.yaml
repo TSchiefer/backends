@@ -93,21 +93,24 @@ paths:
   /file-upload:
     post:
       summary: ' Upload a file'
+      consumes:
+             - multipart/form-data
+      parameters:
+        - in: formData
+          name: file_to_upload
+          type: file
+          description: The file to upload.
       responses:
         '200':
           description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/backend"
         '400':
           description: empty post or bad content type
         default:
           description: Default response.
-      parameters:
-      - in: body
-        name: file_body
-        description: The content of the uploaded file
-        schema:
-          type: "array"
-          items:
-            $ref: "#/definitions/backend"
 definitions:
   backend:
     description: "Name of package"
