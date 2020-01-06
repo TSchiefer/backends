@@ -18,9 +18,11 @@
 # The swagger file can be altered and -- as long as the
 # specifications of the endpoints is still given -- then used
 # as the swagger-file to host the API.
+#
+# The file openapi.yaml was renamed to swagger.yaml, since the older version swagger is being used here.
 
 plumber <- plumber::plumb("inst/api/plumber.R")
 plumber$run(swagger = function(pr, spec, ...) {
-  spec <- yaml::read_yaml("inst/api/openapi.yaml")
+  spec <- yaml::read_yaml("inst/api/swagger.yaml")
   spec
 }, port = 8421)
