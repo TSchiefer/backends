@@ -77,19 +77,24 @@ give_feedback <- function(res, content) {
   }
 }
 
-# curl --data-binary "@docs/test.json" -X POST "http://127.0.0.1:8421/file-upload" -H "accept: application/json"
+# Run swagger_from_plumber.R
+#
+# curl -v -F "upload=@test.pdf" "http://127.0.0.1:8421/file-upload" -H "accept: application/json"
+#
 #' Post a file
 #'
 #' @post /file-upload
 function(req) {
-  # req$postBody contains the body of the posted file converted to "character".
-  # It is as of yet unclear where exactly this conversion happens.
-  # like it is implemented now we can convert req$postBody to "raw", but e.g. in case
-  # of an uploaded pdf file, during the conversion of pdf->"character" already
-  # some information gets lost, so it's not as easy as writing/saving it as a pdf file,
-  # cause it then will be corrupted.
-  # The question if the behavior will be the same for spectra-files would need
-  # to be investigated.
-  raw <- charToRaw(req$postBody)
-  writeBin(raw, "test_new")
+  multipart <- mime::parse_multipart(req)
+
+  # This is for testing, only works on a local server
+  in_contents <- readBin(multipart$upload$name, raw(1), n = 100e6)
+  out_contents <- readBin(multipart$upload$datapath, raw(1), n = 100e6)
+
+  stopifnot(identical(in_contents, out_contents))
+
+  list(
+    length = jsonlite::unbox(length(out_contents)),
+    md5 = digest::digest(multipart$upload$datapath, file = TRUE)
+  )
 }
