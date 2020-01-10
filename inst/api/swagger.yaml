@@ -3,6 +3,7 @@ info:
   description: "Lists all known DBI backends"
   version: "0.0.1"
   title: "DBI backends"
+basePath: "/v1"
 paths:
   /all:
     get:
@@ -22,7 +23,7 @@ paths:
         '200':
           description: OK
           schema:
-            type: "array"
+            type: "string"
             items:
               $ref: "#/definitions/backend"
         '400':
@@ -74,6 +75,68 @@ paths:
           - "TSpadi"
           default: "RPostgres"
         collectionFormat: "multi"
+  /{package}:
+    get:
+      summary: ' Request backend by R package name'
+      produces:
+      - "application/json"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/backend"
+        '400':
+          description: Package name missing (required).
+        '404':
+          description: Package name not found.
+      default:
+        description: Default response.
+      security:
+      - api_key: []
+      parameters:
+      - name: package
+        description: Package name
+        in: path
+        required: yes
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "RMySQL"
+          - "RPostgres"
+          - "noctua"
+          - "RAthena"
+          - "odbc"
+          - "RSQLite"
+          - "RMariaDB"
+          - "AzureKusto"
+          - "RPresto"
+          - "civis"
+          - "RecordLinkage"
+          - "implyr"
+          - "DatabaseConnector"
+          - "bigrquery"
+          - "MonetDBLite"
+          - "RJDBC"
+          - "RClickhouse"
+          - "sergeant"
+          - "RSQLServer"
+          - "ROracle"
+          - "TSmisc"
+          - "TSsdmx"
+          - "MonetDB.R"
+          - "TSfame"
+          - "TSjson"
+          - "TSgetSymbol"
+          - "TShistQuote"
+          - "TSxls"
+          - "TSzip"
+          - "TSpadi"
+          default: "RPostgres"
+        collectionFormat: "multi"
+
   /give-feedback:
     post:
       summary: ' Post something'

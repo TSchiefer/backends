@@ -44,6 +44,38 @@ by_package <- function(res, name) {
   }
 }
 
+
+#' All backends
+#'
+#' @serializer contentType list(type="application/json")
+#' @response 200 OK
+#' @get /<package>
+by_pkg_dyn <- function(res, package) {
+  if (rlang::is_missing(package)) {
+    res$status <- 400
+    jsonlite::toJSON(list(
+      error =
+        "Your request did not include the package name (required)."
+    ))
+  } else {
+    path <- file.path("docs/by-package", paste0(package, ".json"))
+    file_exists <- file.exists(path)
+    if (!base::all(file_exists)) {
+      res$status <- 404
+      jsonlite::toJSON(list(
+        error =
+          paste0(
+            "Please verify package name: ",
+            paste0(package[!file_exists], collapse = ", ")
+          )
+      ))
+    } else {
+      jsonlite::toJSON(setNames(purrr::map(package, by_package_impl), package), pretty = TRUE, auto_unbox = TRUE)
+    }
+  }
+}
+
+
 by_package_impl <- function(name) {
   path <- file.path("docs/by-package", paste0(name, ".json"))
   jsonlite::read_json(path)
@@ -85,11 +117,12 @@ give_feedback <- function(res, content) {
 #'
 #' @post /file-upload
 function(req) {
-  multipart <- mime::parse_multipart(req)
-  # This is for testing, only works on a local server and if the test file is located in main project folder
-  in_contents <- readBin(multipart$upload$name, raw(1), n = 100e6)
-  out_contents <- readBin(multipart$upload$datapath, raw(1), n = 100e6)
-
+  print(system.time({
+    multipart <- mime::parse_multipart(req)
+    # This is for testing, only works on a local server and if the test file is located in main project folder
+    in_contents <- readBin(multipart$upload$name, raw(1), n = 100e6)
+    out_contents <- readBin(multipart$upload$datapath, raw(1), n = 100e6)
+  }))
   stopifnot(identical(in_contents, out_contents))
 
   list(

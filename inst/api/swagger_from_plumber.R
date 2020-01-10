@@ -20,9 +20,14 @@
 # as the swagger-file to host the API.
 #
 # The file openapi.yaml was renamed to swagger.yaml, since the older version swagger is being used here.
+base_path <- yaml::read_yaml("inst/api/swagger.yaml")$basePath
+root <- plumber::plumber$new()
 
-plumber <- plumber::plumb("inst/api/plumber.R")
-plumber$run(swagger = function(pr, spec, ...) {
+plum <- plumber::plumber$new("inst/api/plumber.R")
+root$mount(base_path, plum)
+
+# plumber <- plumber::plumb("inst/api/plumber.R")
+root$run(swagger = function(pr, spec, ...) {
   spec <- yaml::read_yaml("inst/api/swagger.yaml")
   spec
 }, port = 8421)
